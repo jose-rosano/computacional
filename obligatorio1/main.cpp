@@ -1,5 +1,5 @@
 // Obligatorio 1: Simular la Dinámica del Sistema Solar
-//w
+
 #include <iostream>
 #include <cmath>
 
