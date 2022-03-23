@@ -8,11 +8,11 @@ using namespace std;
 class cMatriz
 {
     private:
-    int filas, columnas;
     double x[TAM][TAM];
 
     public:
     cMatriz(void);
+    int filas, columnas;
     int get_numfilas(void);
     int get_numcolumnas(void);
     bool EsCuadrada(void);
@@ -24,7 +24,7 @@ class cMatriz
     cMatriz operator *(cMatriz);
 };
 
-//Método constructor, inicializa a matriz identidad
+//Mï¿½todo constructor, inicializa a matriz identidad
 cMatriz::cMatriz (void)
 {
     filas = columnas = TAM;
@@ -87,7 +87,7 @@ void cMatriz::Mostrar(void)
     {
         for(int j=0; j<columnas; j++)
         {
-            /* Usé iomanip para esto pero acabo de descubrir el método
+            /* Usï¿½ iomanip para esto pero acabo de descubrir el mï¿½todo
                width del objeto cout (ancho fijo)
                cout << setw(5);                                     */
             cout.width(7);
@@ -153,31 +153,4 @@ cMatriz cMatriz::operator *(cMatriz op)
     else prod.filas = prod.columnas = 0;
 
     return prod;
-}
-
-int main (void)
-{
-    cMatriz m1, m2, m3;
-
-    m1.Rellenar();
-    m1.Mostrar();
-
-    m2.Rellenar();
-    m2.Mostrar();
-
-    cout << endl;
-
-    m3 = m1 + m2;
-    m3.Mostrar();
-
-    cout << endl;
-
-    m3 = m1 * m2;
-    m3.Mostrar();
-
-    cout << endl;
-    m3 = m1.Trasponer();
-    m3.Mostrar();
-
-    return 0;
 }
