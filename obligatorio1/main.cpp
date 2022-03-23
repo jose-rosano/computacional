@@ -2,20 +2,35 @@
 
 #include <iostream>
 #include <cmath>
-#include "clase_cMatriz.cpp"
-
+#include <fstream>
+#include "functions.h"
 using namespace std;
 
+void dif (float x[], float y[], float z[]);
+void mostrar(float x[]);
+
+void LeerData(float x[][], float y[][], float z[][]){
+  ifstream fich;
+  
+  fich.open("datos.txt");
+  if(!fich.is_open())
+    cout << "Error al abrir el fichero";
+  else 
+    while(!fich.eof()){
+
+    }
+  fich.close();
+}
+
 int main(){
-  float h=0, t=0; 
-  cMatriz r;
-  r.filas=2;
-  r.columnas=2;
+  int N=3; //Numero de planetas
+  float h=0, t=0;
+  float r[N][2]={{0,1},{0,2},{0,3}},
+        v[N][2]={{0,4},{0,5},{0,6}},
+        a[N][2]={{0,0},{0,0},{0,0}};
 
-  r.Mostrar();
+  dif(r[1],r[2],a[0]);
+  mostrar(a[0]);
 
-
-
-//  cout << h << endl;
   return 0;
 }
