@@ -1,4 +1,3 @@
-//*********************
 //******_HEADER_*******
 //*********************
 
@@ -7,17 +6,24 @@
 #include <fstream>
 
 #define N 3 //Número planetas
+#define c 149.6e9 //Distancia Tierra-Sol (en metros)
+#define cte 3.35695e-5 // =sqrt(c/GM)
+#define M 1.989e30 //Masa del Sol (en kg)
 using namespace std;
 
+//Funciones soporte de las posteriores
 void Sum(float x[], float ret[]); //'ret' de return (la variable que se ve alterada) 
 void Mult(float n, float ret[]);
 void Dif(float x[], float y[], float ret[]);
 float Norm(float x[]);
 void Mostrar(float x[]);
-void Init(float ret[][2]);
 
+void Init(float ret[][2]);
 void LeerData(float x[][2], float y[][2], float z[]);
+void Rescaling(float x[][2], float y[][2], float z[]);
 void Acel_t(float x[][2], float z[], float ret[][2]);
+
+void ExportData(float x[][2]);
 
 
 //Función Suma del 1er vector en el 2o
@@ -52,6 +58,8 @@ void Mostrar(float x[]){
   cout << endl;
 }
 
+//*************************
+
 //Inicializar Matriz a Cero
 void Init(float ret[][2]){
   for(int i=0; i<N; i++)
@@ -85,6 +93,17 @@ void LeerData(float x[][2], float y[][2], float z[]){
   fich.close();
 }
 
+//Función Reescalamiento de Datos iniciales
+void Rescaling(float x[][2], float y[][2], float z[]){
+  for(int i=0; i<N; i++){
+    for(int j=0; j<2; j++){
+      x[i][j] = x[i][j]/c;
+      y[i][j] *=cte;
+    }
+    z[i] = z[i]/M;
+  }
+}
+
 //Función Aceleración inicial
 void Acel_t(float x[][2], float z[], float ret[][2]){
   float aux=0, aux_arr[N][2];
@@ -99,4 +118,16 @@ void Acel_t(float x[][2], float z[], float ret[][2]){
         Sum(aux_arr[j],ret[i]);
       }
   }
+}
+
+//Función Exportar Datos, re-reescalados
+void ExportData(float x[][2]){
+  ofstream fich;  
+
+  fich.open("planets_data.dat");
+  //Escribe las posiciones, re-reescaladas
+  for(int i=0; i<N; i++)
+    fich << x[i][0]*c << "   " << x[i][1]*c << endl;
+
+  fich.close();
 }

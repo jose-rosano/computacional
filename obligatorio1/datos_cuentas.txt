@@ -1,5 +1,8 @@
 **_Reescalamiento_**
 r'=r/c, con c=1.496*10^11 (m)
+t'=sqrt(GM/c^3)t, con sqrt(GM/c^3)=0.0172 (días)
+ => v'=sqrt(c/GM)v
+m'=m/M
 
 Sol:
  * M: 1.989*10^30 (kg)
