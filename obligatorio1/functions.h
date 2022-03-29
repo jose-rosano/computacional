@@ -14,9 +14,11 @@ using namespace std;
 void Mostrar(float x[]); //Usada para hacer pruebas de funcionamiento
 
 void Init(float ret[][2]);
+void InitV(float ret[]);
 void LeerData(float x[][2], float y[][2], float z[]);
 void Rescaling(float x[][2], float y[][2], float z[]);
 void New_a(float x[][2], float z[], float ret[][2]);
+void CalcT(float x[][2], float z[], float a);
 
 
 //Función Mostrar vectores
@@ -35,6 +37,12 @@ void Init(float ret[][2]){
   for(int i=0; i<N; i++)
     for(int j=0; j<2; j++)
       ret[i][j]=0;
+}
+
+//Inicializar Vector a Cero
+void InitV(float ret[]){
+  for(int j=0; j<N; j++)
+    ret[j]=0;
 }
 
 //Función Leer datos iniciales
@@ -94,3 +102,25 @@ void New_a(float x[][2], float z[], float ret[][2]){
       }
   }
 }
+
+//Función Calcular Periodo de los planetas
+void CalcT(float x[][2], float z[], float a){
+  if(a>1.3 && a<12) //Filtro conteos iniciales
+    for(int i=1; i<=4; i++) //Solo planetas Rocosos
+      if(x[i][0]>0 && x[i][1]>0 && z[i]==0 && x[i][1]<0.02) //Filtros
+        z[i] = a;
+
+  if(a>74) //Sabemos que en el intervalo [12,74] no hay lecturas de periodos (esto da + velocidad)
+    for(int i=5; i<N; i++) //Solo planetas Gaseosos
+      if(x[i][0]>0 && x[i][1]>0 && z[i]==0 && x[i][1]<0.05) //Filtros
+        z[i] = a;
+}
+
+/* *******************_CREO que NO se puede pasar FICH por referencia
+//Función Escribir Posición en fichero
+void ExportPos(ofstream &fich, float x[][2]){
+  for(int i=0; i<N; i++)
+    fich << x[i][0] << ",   " << x[i][1] << endl;
+
+  fich << endl;
+} */

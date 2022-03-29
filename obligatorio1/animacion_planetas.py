@@ -51,7 +51,7 @@ file_in = "planets_data.dat" # Nombre del fichero de datos
 file_out = "planetas" # Nombre del fichero de salida (sin extensión)
 
 # Límites de los ejes X e Y
-x_min = -2
+x_min = -2 #Poner 2 para planetas Rocosos y 50 para Gaseosos
 x_max = 2
 y_min = -2 
 y_max = 2
