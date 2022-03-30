@@ -10,10 +10,11 @@
 #define c 149.6e9 //Distancia Tierra-Sol (en metros)
 #define cte 3.35695e-5 // =sqrt(c/GM)
 #define M 1.989e30 //Masa del Sol (en kg)
+#define G 6.6738e-11 // Cte Gravitación Universal
 using namespace std;
 
 int main(){
-  float h=0.01; //h elegido porque t'~0.0172t
+  float h=0.01, L=0, E=0; //h elegido porque t'~0.0172t, Momento Angular y Enegía
   float r[N][2], v[N][2], m[N], a[N][2], w[N][2], T[N]; //Radio orbital, velocidad orbital, masa, aceleración, w y periodos
   ofstream f_r, f_ctes, f_T; //Fichero donde exportar las posiciones, ctes del movimiento y periodos
 
@@ -27,13 +28,18 @@ int main(){
   f_ctes.open("ctes_mov.dat");
   f_T.open("periodos.dat");
 
-  //1ª aceleración y escritura de posiciones iniciales
+  //1ª aceleración y ctes mov iniciales
   New_a(r,m,a); 
-  for(int i=0; i<N; i++) 
+  New_L_E(r,v,m,L,E);
+
+  //1ª escritura de posiciones y ctes mov iniciales
+  for(int i=0; i<N; i++)
     f_r << r[i][0] << ",   " << r[i][1] << endl;
-  f_r << endl; 
+  f_r << endl;
+  f_ctes << 0 << "->   " << L << "   " << E << endl;
+
   
-  for(float t=0; t<1600; t +=h){ //t definido SOLO en el FOR
+  for(float t=0; t<15; t +=h){ //t definido SOLO en el FOR___Para periodo: 1600
     //Algoritmo de Verlet 
     for(int i=0; i<N; i++)
       for(int j=0; j<2; j++){
@@ -54,6 +60,11 @@ int main(){
 
     //Cálculo de los periodos
     CalcT(r,T,t);
+
+    //Cálculo de las ctes del movimiento (L, E)
+    New_L_E(r,v,m,L,E);
+
+    f_ctes << t+h << "->   " << L << "   " << E << endl;
   }
 
   //Escritura de los periodos en fichero (sin reescalar)

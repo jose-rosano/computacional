@@ -9,6 +9,7 @@
 #define c 149.6e9 //Distancia Tierra-Sol (en metros)
 #define cte 3.35695e-5 // =sqrt(c/GM)
 #define M 1.989e30 //Masa del Sol (en kg)
+#define G 6.6738e-11 // Cte Gravitación Universal
 using namespace std;
 
 void Mostrar(float x[]); //Usada para hacer pruebas de funcionamiento
@@ -18,6 +19,7 @@ void InitV(float ret[]);
 void LeerData(float x[][2], float y[][2], float z[]);
 void Rescaling(float x[][2], float y[][2], float z[]);
 void New_a(float x[][2], float z[], float ret[][2]);
+void New_L_E(float x[][2], float y[][2], float z[], float &cte1, float &cte2);
 void CalcT(float x[][2], float z[], float a);
 
 
@@ -99,6 +101,22 @@ void New_a(float x[][2], float z[], float ret[][2]){
           aux_arr[j][k] *= aux;
           ret[i][k] += aux_arr[j][k];
         }
+      }
+  }
+}
+
+//Función Momento Angular y Energía
+void New_L_E(float x[][2], float y[][2], float z[], float &cte1, float &cte2){
+  cte1=0;
+  cte2=0;
+
+  for(int i=0; i<N; i++){
+    cte1 += z[i] * (x[i][0]*y[i][1] - x[i][1]*y[i][0]); //Mom Ang Total
+
+    cte2 += 0.5*z[i] * (y[i][0]*y[i][0] + y[i][1]*y[i][1]);
+    for(int j=0; j<N; j++)
+      if(j!=i){
+        cte2 -= G*z[i]*z[j]*pow( (x[i][0]-x[j][0])*(x[i][0]-x[j][0]) + (x[i][1]-x[j][1])*(x[i][1]-x[j][1]), -0.5); 
       }
   }
 }
