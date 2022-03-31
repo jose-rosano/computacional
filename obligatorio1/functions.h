@@ -133,12 +133,3 @@ void CalcT(float x[][2], float z[], float a){
       if(x[i][0]>0 && x[i][1]>0 && z[i]==0 && x[i][1]<0.05) //Filtros
         z[i] = a;
 }
-
-/* *******************_CREO que NO se puede pasar FICH por referencia
-//Función Escribir Posición en fichero
-void ExportPos(ofstream &fich, float x[][2]){
-  for(int i=0; i<N; i++)
-    fich << x[i][0] << ",   " << x[i][1] << endl;
-
-  fich << endl;
-} */

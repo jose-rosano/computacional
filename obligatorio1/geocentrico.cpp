@@ -17,7 +17,7 @@ int main(){
   int n=0; //Contador
   float h=0.01, L=0, E=0; //h elegido porque t'~0.0172t, Momento Angular y Enegía
   float r[N][2], v[N][2], m[N], a[N][2], w[N][2], T[N]; //Radio orbital, velocidad orbital, masa, aceleración, w y periodos
-  ofstream f_r, f_ctes, f_T; //Fichero donde exportar las posiciones, ctes del movimiento y periodos
+  ofstream f_r; //Fichero donde exportar las posiciones, ctes del movimiento y periodos
 
   //a=0, w=0, Lectura de datos iniciales y Reescalamiento
   Init(a); Init(w); InitV(T); 
@@ -25,24 +25,20 @@ int main(){
   Rescaling(r,v,m);
 
   //Apertura de ficheros
-  f_r.open("planets_data.dat");
-  f_ctes.open("ctes_mov.dat");
-  f_T.open("periodos.dat");
+  f_r.open("planets_data_geo.dat");
 
   //1ª aceleración y ctes mov iniciales
-  New_a(r,m,a); 
-  New_L_E(r,v,m,L,E);
+  New_a(r,m,a);
 
   //1ª escritura de posiciones y ctes mov iniciales
   for(int i=0; i<N; i++)
-    f_r << r[i][0] << ",   " << r[i][1] << endl;
+    f_r << r[i][0]-r[3][0] << ",   " << r[i][1]-r[3][1] << endl;
   f_r << endl;
-  f_ctes << 0 << "   " << E << "   " << L << endl;
 
   
-  for(float t=0; t<1600; t +=h){
+  for(float t=0; t<1600; t +=h){ //t definido SOLO en el FOR___Para periodo: 1600
     n++;
-
+    
     //Algoritmo de Verlet 
     for(int i=0; i<N; i++)
       for(int j=0; j<2; j++){
@@ -56,28 +52,15 @@ int main(){
       for(int j=0; j<2; j++)
         v[i][j] = w[i][j] + h/2*a[i][j]; //Nueva v
 
-    //Cálculo de los periodos
-    CalcT(r,T,t);
-
     //Menos datos a fichero para poder sacar luego los vídeos
     if(n%20==0){ 
       //Escritura de las posiciones en fichero (sin reescalar)
       for(int i=0; i<N; i++)
-        f_r << r[i][0] << ",   " << r[i][1] << endl;
-      f_r << endl; 
-
-      //Cálculo y escritura de las ctes del movimiento (L, E)
-      New_L_E(r,v,m,L,E);
-      f_ctes << t+h << "   " << E << "   " << L << endl;
+        f_r << r[i][0]-r[3][0] << ",   " << r[i][1]-r[3][1] << endl;
+      f_r << endl;
     }
   }
 
-  //Escritura de los periodos en fichero (sin reescalar)
-  for(int i=1; i<N;i++)
-    f_T << T[i]/0.0172 << endl;  
-
   f_r.close();
-  f_ctes.close();
-  f_T.close();
   return 0;
 }

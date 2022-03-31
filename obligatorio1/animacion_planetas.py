@@ -40,6 +40,7 @@
 # ================================================================================
 
 # Importa los módulos necesarios
+from cProfile import label
 from matplotlib import pyplot as plt
 from matplotlib.animation import FuncAnimation
 from matplotlib.patches import Circle
@@ -61,7 +62,7 @@ show_trail = True # Muestra la "estela" del planeta
 trail_width = 1 # Ancho de la estela
 save_to_file = False # False: muestra la animación por pantalla,
                      # True: la guarda en un fichero
-dpi = 150 # Calidad del vídeo de salida (dots per inch)
+dpi = 70 # Calidad del vídeo de salida (dots per inch)
 
 # Radio del planeta, en las mismas unidades que la posición
 # Puede ser un número (el radio de todos los planetas) o una lista con
@@ -113,6 +114,7 @@ fig, ax = plt.subplots()
 ax.axis("equal")  # Misma escala para ejes X e Y
 ax.set_xlim(x_min, x_max)
 ax.set_ylim(y_min, y_max)
+ax.set_title("Modelo Heliocéntrico", fontsize=14, fontname="Times New Roman")
 
 # Si solo se ha dado un radio para todos los planetas, conviértelo a una
 # lista con todos los elementos iguales
