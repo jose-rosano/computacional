@@ -36,7 +36,7 @@ int main(){
   f_r << endl;
 
   
-  for(float t=0; t<1600; t +=h){ //t definido SOLO en el FOR___Para periodo: 1600
+  for(float t=0; t<300; t +=h){ //t=15 para planetas rocosos, t=300 para gaseosos
     n++;
     
     //Algoritmo de Verlet 
@@ -53,7 +53,7 @@ int main(){
         v[i][j] = w[i][j] + h/2*a[i][j]; //Nueva v
 
     //Menos datos a fichero para poder sacar luego los vídeos
-    if(n%20==0){ 
+    if(n%100==0){ //n%20 para planetas rocosos, n%100 para gaseosos
       //Escritura de las posiciones en fichero (sin reescalar)
       for(int i=0; i<N; i++)
         f_r << r[i][0]-r[3][0] << ",   " << r[i][1]-r[3][1] << endl;

@@ -40,7 +40,7 @@ int main(){
   f_ctes << 0 << "   " << E << "   " << L << endl;
 
   
-  for(float t=0; t<1600; t +=h){
+  for(float t=0; t<1600; t +=h){ //t=15 para planetas rocosos, t=1600 para gaseosos
     n++;
 
     //Algoritmo de Verlet 
@@ -60,7 +60,7 @@ int main(){
     CalcT(r,T,t);
 
     //Menos datos a fichero para poder sacar luego los vídeos
-    if(n%20==0){ 
+    if(n%400==0){ //n%20 para planetas rocosos, n%400 para gaseosos
       //Escritura de las posiciones en fichero (sin reescalar)
       for(int i=0; i<N; i++)
         f_r << r[i][0] << ",   " << r[i][1] << endl;
