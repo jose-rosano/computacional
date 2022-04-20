@@ -4,22 +4,39 @@
 #include <iostream>
 #include <cmath>
 #include <fstream>
+#include <stdlib.h>
+#include <time.h>
 
 #define N 100 //Filas de la red
 #define M 100 //Columnas de la red
 using namespace std;
 
 void Init(int ret[][N]);
+void Init_Aleat(int ret[][N]);
 void ExportData(ofstream &fich, int s[N][M]);
 float New_E(int s[N][M], int n, int m);
 
 //*************************
 
-//Inicializar Matriz a Cero
+//Inicializar Matriz a Uno
 void Init(int ret[][N]){
   for(int i=0; i<N; i++)
     for(int j=0; j<N; j++)
       ret[i][j]=1;
+}
+
+//Inicializar Matriz a Números Random
+void Init_Aleat(int ret[][N]){
+  int aux;
+  srand(time(NULL));
+
+  for(int i=0; i<N; i++)
+    for(int j=0; j<N; j++){
+      if(rand()< 0.5*RAND_MAX)
+        ret[i][j] = 1;
+      else 
+        ret[i][j] = -1;
+    }
 }
 
 //Función Escritura en Fichero

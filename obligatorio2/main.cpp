@@ -21,7 +21,8 @@ int main(){
   srand(time(NULL)); //Inicializa el valor de la serie de números aleatorios
 
   //Configuración inicial de espines
-  Init(s);
+  Init(s); //Ordenado (todos espines son 1)
+  //Init_Aleat(s); //Desordenado 
 
   //***Pedir valores de T, pasos MC, PMC en nombre fich*******????
 
