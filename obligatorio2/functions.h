@@ -18,14 +18,14 @@ float New_E(int s[N][M], int n, int m);
 
 //*************************
 
-//Inicializar Matriz a Uno
+//Inicializar Matriz a Configuración Ordenada (todo 1)
 void Init(int ret[][N]){
   for(int i=0; i<N; i++)
     for(int j=0; j<N; j++)
       ret[i][j]=1;
 }
 
-//Inicializar Matriz a Números Random
+//Inicializar Matriz a Configuración Desordenada
 void Init_Aleat(int ret[][N]){
   int aux;
   srand(time(NULL));
