@@ -24,8 +24,6 @@ int main(){
   Init(s); //Ordenado (todos espines son 1)
   //Init_Aleat(s); //Desordenado 
 
-  //***Pedir valores de T, pasos MC, PMC en nombre fich*******????
-
   //Apertura de fichero y 1ª escritura
   fich.open("ising_data.dat");
 
