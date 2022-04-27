@@ -40,7 +40,6 @@ int main(){
       if(aleat<p) 
         s[n][m] = -s[n][m];
     }
-    //fich << "#" << i << "  (" << aleat << ",  " << p << ")" << endl; //****Esto puede dar PROBLEMAS en la lectura del .PY
     ExportData(fich,s);
   }
 
