@@ -7,16 +7,15 @@
 #include <fstream>
 
 #define N 8 //Tamaño del retículo
-#define TAM 20 //n_MAX
 using namespace std;
 
 void GenerateV(double V[], double lambda, double k);
-void InitialPhi(complex<double> Phi[][TAM], double k);
-double NormPhi(complex<double> Phi[][TAM], int n);
+void InitialPhi(complex<double> Phi[], double k);
+double NormPhi(complex<double> Phi[]);
 void GenerateA0(complex<double> A0[], double V[], double s);
 void GenerateAlpha(complex<double> alpha[], complex<double> A0[]);
-void ExportData(ofstream &fich, complex<double> Phi[][TAM], int n);
-void NewBeta(complex<double> beta[][TAM], complex<double> alpha[], complex<double> Phi[][TAM], double s, int n);
+void ExportData(ofstream &fich, complex<double> Phi[]);
+void NewBeta(complex<double> beta[], complex<double> alpha[], complex<double> Phi[], double s);
 
 //*************************
 //Función Generar Potencial V
@@ -32,26 +31,26 @@ void GenerateV(double V[], double lambda, double k){
 }
 
 //Función Generar Función de Onda Phi Inicial
-void InitialPhi(complex<double> Phi[][TAM], double k){
+void InitialPhi(complex<double> Phi[], double k){
   complex<double> i=1.0i;
   double norma;
 
-  Phi[0][0] = Phi[N][0] = 0;
+  Phi[0] = Phi[N] = 0;
   for(int j=1; j<N; j++)
-    Phi[j][0]=exp(-8.0*(4*j-N)*(4*j-N)/(N*N)) *  exp(i*k*(double)j);
+    Phi[j]=exp(-8.0*(4*j-N)*(4*j-N)/(N*N)) *  exp(i*k*(double)j);
 
   //Normalizar la función Phi
-  norma = NormPhi(Phi,0);
+  norma = NormPhi(Phi);
   for(int j=0; j<=N; j++)
-    Phi[j][0] = Phi[j][0]/norma;
+    Phi[j] = Phi[j]/norma;
 }
 
 //Función Norma de Vector Complejo
-double NormPhi(complex<double> Phi[][TAM], int n){
+double NormPhi(complex<double> Phi[]){
   double norma=0;
 
   for(int j=0; j<=N; j++)
-    norma +=abs(Phi[j][n]);
+    norma +=abs(Phi[j]);
   return norma;
 }
 
@@ -71,22 +70,22 @@ void GenerateAlpha(complex<double> alpha[], complex<double> A0[]){
 }
 
 //Función Escritura en Fichero
-void ExportData(ofstream &fich, complex<double> Phi[][TAM], int n){
+void ExportData(ofstream &fich, complex<double> Phi[]){
   for(int j=0; j<=N; j++)
-      fich << j << ",   " << real(Phi[j][n]) << ",   " << imag(Phi[j][n]) << ",   " << norm(Phi[j][n]) << endl;
+      fich << j << ",   " << real(Phi[j]) << ",   " << imag(Phi[j]) << ",   " << norm(Phi[j]) << endl;
   fich << endl;
 }
 
 //Función Nueva Beta
-void NewBeta(complex<double> beta[][TAM], complex<double> alpha[], complex<double> Phi[][TAM], double s, int n){
+void NewBeta(complex<double> beta[], complex<double> alpha[], complex<double> Phi[], double s){
   complex<double> i=1.0i;
   
-  beta[N-1][n]=0;
+  beta[N-1]=0;
   for(int j=N-1; j>0; j--)
-    beta[j-1][n] = -alpha[j-1]*(4.0*i*Phi[j][n]/s-beta[j][n]);
+    beta[j-1] = -alpha[j-1]*(4.0*i*Phi[j]/s-beta[j]);
 }
 
 //Función Nueva chi
-void NewChi(complex<double> chi[][TAM], complex<double> alpha[], complex<double> beta[][TAM]){
+void NewChi(complex<double> chi[], complex<double> alpha[], complex<double> beta[]){
   
 }

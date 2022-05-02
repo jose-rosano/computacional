@@ -8,7 +8,7 @@
 #include "functions.h"
 
 #define N 8 //Tamaño del retículo
-#define TAM 20 //n_MAX
+//#define TAM 20 //n_MAX
 using namespace std;
 
 int main(){
@@ -16,10 +16,9 @@ int main(){
   int n_c=2; //Nº ciclos (n_c=1,...,N/4)
   double lambda=0.3;
 
-  int n=0;
   ofstream fich;
   double s, k, V[N+1], norma;
-  complex<double> Phi[N+1][TAM], A0[N], alpha[N], beta[N][TAM]; 
+  complex<double> Phi[N+1], A0[N], alpha[N], beta[N]; 
 
   //_________________________________________NOTA: permitir elegir x_0 y sigma en Phi
 
@@ -33,11 +32,11 @@ int main(){
 
   //Apertura de fichero y 1ª escritura
   fich.open("schrodinger_data.dat");
-  ExportData(fich,Phi,n); //Se escribe: posición, parte real, parte imaginaria, probabilidad
+  ExportData(fich,Phi); //Se escribe: posición, parte real, parte imaginaria, probabilidad
 
   //Comienza el Algoritmo
   for(int t=0; t<10; t++){
-    NewBeta(beta,alpha,Phi,s,n);
+    NewBeta(beta,alpha,Phi,s);
   }
 
 
