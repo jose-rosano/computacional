@@ -25,7 +25,7 @@
 #
 # donde fi_j, gi_j es el valor en el nodo i-ésimo y el instante j-ésimo 
 # de las funciones a representar, mientras que xi_j es la posición de
-# dicho nodo. Se pueden representar un número arbitrario de funciones.
+# dicho nodo. Se pueden representar SIETE ((un número arbitrario de)) funciones.
 #
 # El programa asume que el número de nodos no cambia a lo largo del tiempo.
 # 
@@ -48,7 +48,7 @@ import io
 file_in = "schrodinger_data.dat" # Nombre del fichero de datos
 file_out = "schrodinger" # Nombre del fichero de salida (sin extensión)
 interval = 100 # Tiempo entre fotogramas en milisegundos
-save_to_file = True # False: muestra la animación por pantalla,
+save_to_file = False # False: muestra la animación por pantalla,
                      # True: la guarda en un fichero
 dpi = 150 # Calidad del vídeo de salida (dots per inch)
 
@@ -95,11 +95,21 @@ ax.set_ylim(ymin, ymax)
 # Representa el primer fotograma
 xs = frames_data[0][0]
 lines = list()
+    #Esta parte del código la he cambiado yo
+line, = ax.plot(xs, frames_data[0][1], "-", color="b", label='Parte Real')
+lines.append(line)
+line, = ax.plot(xs, frames_data[0][2], "-", color="g", label='Parte Imaginaria', linewidth=1)
+lines.append(line)
+line, = ax.plot(xs, frames_data[0][3], "-", color="k", label='Probabilidad', linewidth=1)
+lines.append(line)
+ax.legend()
+
+''' #Parte original del código
 for ys in frames_data[0][1:]:
     # Info sobre la función plot: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html)
     line, = ax.plot(xs, ys, "-", color="blue", linewidth=1)
     lines.append(line)
- 
+'''
 # Función que actualiza las curvas en la animación 
 def update(j_frame, frames_data, lines):
     xs = frames_data[j_frame][0]
@@ -111,7 +121,7 @@ def update(j_frame, frames_data, lines):
 
     return lines
 
-# Calcula el nº de frtogramas o instantes de tiempo
+# Calcula el nº de fotogramas o instantes de tiempo
 nframes = len(frames_data)
 
 # Si hay más de un instante de tiempo, genera la animación

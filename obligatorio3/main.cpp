@@ -3,32 +3,44 @@
 
 #include <iostream>
 #include <cmath>
-#include <complex>
+#include <complex> //Def i=1.0i
 #include <fstream>
 #include "functions.h"
 
-#define PI 3.1415926535
+#define N 8 //Tamaño del retículo
 #define TAM 20 //n_MAX
 using namespace std;
 
 int main(){
   //Parámetros iniciales
-  int N=8, n=2; // Tamaño retículo, nº ciclos (n=1,...,N/4)
+  int n_c=2; //Nº ciclos (n_c=1,...,N/4)
   double lambda=0.3;
 
-  double s, k, V[N+1];
-  complex<double> Phi[N+1][TAM]; //Def i=1.0i
+  int n=0;
+  ofstream fich;
+  double s, k, V[N+1], norma;
+  complex<double> Phi[N+1][TAM], A0[N], alpha[N], beta[N][TAM]; 
 
-  k = 2*PI*n/N;
-  s = 1/(4*k*k);
-  GenerateV(V,lambda,k,N);
-  GeneratePhi(Phi,k,N);
+  //_________________________________________NOTA: permitir elegir x_0 y sigma en Phi
 
-
+  //Evalúo las variables que permanecen ctes en el proceso
+  k = 2*3.1415926535*n_c/N;
+  s = 0.25/(k*k);
+  GenerateV(V,lambda,k);
+  InitialPhi(Phi,k); //Normalizada a 1 inicialmente
+  GenerateA0(A0,V,s);
+  GenerateAlpha(alpha,A0);
 
   //Apertura de fichero y 1ª escritura
-  //fich.open("schrodinger_data.dat");
+  fich.open("schrodinger_data.dat");
+  ExportData(fich,Phi,n); //Se escribe: posición, parte real, parte imaginaria, probabilidad
 
-  //fich.close();
+  //Comienza el Algoritmo
+  for(int t=0; t<10; t++){
+    NewBeta(beta,alpha,Phi,s,n);
+  }
+
+
+  fich.close();
   return 0;
 }
