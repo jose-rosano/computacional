@@ -21,7 +21,7 @@ void NewChi(complex<double> chi[], complex<double> alpha[], complex<double> beta
 void NewPhi(complex<double> Phi[], complex<double> chi[]);
 
 //*************************
-//Función Norma al Cuadrado de Vector Complejo
+//Función Norma de Vector Complejo
 double NormPhi(complex<double> Phi[]){
   double normacuad=0; //Norma al cuadrado
 
