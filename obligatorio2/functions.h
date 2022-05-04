@@ -11,8 +11,8 @@
 #define M 100 //Columnas de la red
 using namespace std;
 
-void Init(int ret[][N]);
-void Init_Aleat(int ret[][N]);
+void Init(int ret[N][M]);
+void Init_Aleat(int ret[N][M]);
 void ExportData(ofstream &fich, int s[N][M]);
 float New_E(int s[N][M], int n, int m);
 
@@ -21,7 +21,7 @@ float New_E(int s[N][M], int n, int m);
 //Inicializar Matriz a Configuración Ordenada (todo 1)
 void Init(int ret[][N]){
   for(int i=0; i<N; i++)
-    for(int j=0; j<N; j++)
+    for(int j=0; j<M; j++)
       ret[i][j]=1;
 }
 
@@ -31,7 +31,7 @@ void Init_Aleat(int ret[][N]){
   srand(time(NULL));
 
   for(int i=0; i<N; i++)
-    for(int j=0; j<N; j++){
+    for(int j=0; j<M; j++){
       if(rand()< 0.5*RAND_MAX)
         ret[i][j] = 1;
       else 
