@@ -1,25 +1,25 @@
 # ================================================================================
-# ANIMACION ISING
+# ANIMACION HOPFIELD
 #
 # Genera una animación a partir de un fichero de datos con la configuración
 # del retículo en cada instante de tiempo
 # 
 # El fichero debe estructurarse de la siguiente forma:
 # 
-#   s(1,1)_1, s(1,2)_1, ..., s(1,M)_1
-#   s(2,1)_1, s(2,2)_1, ..., s(2,M)_1
+#   s(1,1)_1 s(1,2)_1 ... s(1,M)_1
+#   s(2,1)_1 s(2,2)_1 ... s(2,M)_1
 #   (...)
-#   s(N,1)_1, s(N,2)_1, ..., s(N,M)_1
+#   s(N,1)_1 s(N,2)_1 ... s(N,M)_1
 #   
-#   s(1,1)_2, s(1,2)_2, ..., s(1,M)_2
-#   s(2,1)_2, s(2,2)_2, ..., s(2,M)_2
+#   s(1,1)_2 s(1,2)_2 ... s(1,M)_2
+#   s(2,1)_2 s(2,2)_2 ... s(2,M)_2
 #   (...)
-#   s(N,1)_2, s(N,2)_2, ..., s(N,M)_2
+#   s(N,1)_2 s(N,2)_2 ... s(N,M)_2
 #
-#   s(1,1)_3, s(1,2)_3, ..., s(1,M)_3
-#   s(2,1)_3, s(2,2)_3, ..., s(2,M)_3
+#   s(1,1)_3 s(1,2)_3 ... s(1,M)_3
+#   s(2,1)_3 s(2,2)_3 ... s(2,M)_3
 #   (...)
-#   s(N,1)_3, s(N,2)_3, ..., s(N,M)_3
+#   s(N,1)_3 s(N,2)_3 ... s(N,M)_3
 #   
 #   (...)
 #
@@ -45,8 +45,8 @@ import io
 
 # Parámetros
 # ========================================
-file_in = "ising_data.dat" # Nombre del fichero de datos
-file_out = "ising" # Nombre del fichero de salida (sin extensión)
+file_in = "hopfield_data.dat" # Nombre del fichero de datos
+file_out = "hopfield" # Nombre del fichero de salida (sin extensión)
 interval = 50 # Originalmente: 100    Tiempo entre fotogramas en milisegundos
 save_to_file = False # False: muestra la animación por pantalla,
                      # True: la guarda en un fichero
@@ -69,7 +69,7 @@ for frame_data_str in data_str.split("\n\n"):
     # Almacena el bloque en una matriz
     # (io.StringIO permite leer una cadena de texto como si fuera un
     # fichero, lo que nos permite usar la función loadtxt de numpy)
-    frame_data = np.loadtxt(io.StringIO(frame_data_str), delimiter=",")
+    frame_data = np.loadtxt(io.StringIO(frame_data_str), delimiter=" ")
 
     # Añade los datos del fotograma (la configuración del sistema)
     # a la lista
