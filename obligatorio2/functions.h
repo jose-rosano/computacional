@@ -27,7 +27,6 @@ void Init(int ret[][N]){
 
 //Inicializar Matriz a Configuración Desordenada
 void Init_Aleat(int ret[][N]){
-  int aux;
   srand(time(NULL));
 
   for(int i=0; i<N; i++)
