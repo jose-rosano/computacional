@@ -1,0 +1,14 @@
+**_Reescalamiento_**
+    rhat = r/dTL, con dTL=3.844*10^8 (m)
+    phi
+    p
+
+Condiciones Iniciales:
+ * r: 6.378*10^3 (km)
+ * v: 11.2 (km/s)
+ * phi:  (º)
+ * theta: (º)
+
+
+************_Bibliografía_***********
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/
