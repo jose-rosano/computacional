@@ -9,6 +9,13 @@ Condiciones Iniciales:
  * phi:  (º)
  * theta: (º)
 
+ * vL: 1.0 (km/s) => w = vL/dTL 
+
+Orden Cuerpos:
+ 1. Tierra
+ 2. Luna
+ 3. Cohete
+
 
 ************_Bibliografía_***********
 https://nssdc.gsfc.nasa.gov/planetary/factsheet/
