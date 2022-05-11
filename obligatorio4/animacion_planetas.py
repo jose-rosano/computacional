@@ -52,22 +52,22 @@ file_in = "nave_espacial.dat" # Nombre del fichero de datos
 file_out = "nave_espacial" # Nombre del fichero de salida (sin extensión)
 
 # Límites de los ejes X e Y
-x_min = -50 #Poner 2 para planetas rocosos y 50 para gaseosos
-x_max = 50
-y_min = -50 
-y_max = 50
+x_min = -2 #Poner 2 para planetas rocosos y 50 para gaseosos
+x_max = 2
+y_min = -2 
+y_max = 2
 
 interval = 150 # Tiempo entre fotogramas en milisegundos
 show_trail = True # Muestra la "estela" del planeta
 trail_width = 1 # Ancho de la estela
-save_to_file = True # False: muestra la animación por pantalla,
+save_to_file = False # False: muestra la animación por pantalla,
                      # True: la guarda en un fichero
 dpi = 150 # Calidad del vídeo de salida (dots per inch)
 
 # Radio del planeta, en las mismas unidades que la posición
 # Puede ser un número (el radio de todos los planetas) o una lista con
 # el radio de cada uno
-planet_radius = 0.3 
+planet_radius = 0.03 
 #planet_radius = [0.5, 0.7, 1.1]
 
 
@@ -114,7 +114,7 @@ fig, ax = plt.subplots()
 ax.axis("equal")  # Misma escala para ejes X e Y
 ax.set_xlim(x_min, x_max)
 ax.set_ylim(y_min, y_max)
-ax.set_title("Modelo Geocéntrico II", fontsize=14)
+ax.set_title("Nave Espacial Tierra-Luna", fontsize=14)
 
 # Si solo se ha dado un radio para todos los planetas, conviértelo a una
 # lista con todos los elementos iguales
