@@ -22,7 +22,7 @@ int main(){
 
   //**********************
   int patrones[P][N][N], s[N][N], n, m;  // Matriz, coordenadas fila-columna
-  float w[N][N][N][N], theta[N][N], H, p, aleat; // Interacciones neuronales, Umbrales de disparo
+  float a[P], H, p, aleat; // Interacciones neuronales, Umbrales de disparo
   ofstream fich;
 
   srand(time(NULL)); // Inicializa el valor de la serie de números aleatorios
@@ -30,8 +30,7 @@ int main(){
   // Lectura de patrones en array, generación de variables ctes
   //CrearPatronesDEF(P); // Activar al añadir patrones nuevos (Lee patrones con dígitos juntos y los separa en otro fichero)
   LeerPatronesDEF(patrones,P);
-  Generar_w(w,patrones,P);
-  Generar_theta(theta,w);
+  Generate_a(a,patrones,P);
 
   // Configuración inicial de espines
   if(red_inicial)
@@ -52,13 +51,13 @@ int main(){
       m = rand()%N; //m entre 0 y (N-1)
 
       //Genera nueva p y nº aleatorio para ver si se invierte el espín
-      H = New_H(s,n,m,theta,w);
+      H = New_H(s,n,m,a,patrones,P);
       p = min((float)1,exp(-H/T));
       aleat = float(rand())/RAND_MAX;
       if(aleat<p) 
         s[n][m] = 1-s[n][m];
 
-      if(j%100==0)
+      if(j%200==0)
         ExportData(fich,s);
     }    
     //ExportData(fich,s);
