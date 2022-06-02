@@ -17,13 +17,16 @@ int main(){
   // Parámetros _______________________Poner booleanos + if para elegir actividad como parámetro??
   float T=0.0001, degeneracion=0.5; // Temperatura, deformacion (entre 0 y 1)
   int P=1, PMC=8; // Nº Patrones almacenados, Nº Pasos Montecarlo
-  bool red_inicial = true; // true:  Condición Inicial Aleatoria
-                           // false: Patrón Deformado
+  bool red_inicial = true;  // true:  Condición Inicial Aleatoria
+                            // false: Patrón Deformado
+  bool solapamiento = true; // true:  Se calcula el Solapamiento y no se exportan los patrones
+                            // false: No se calcula el Solapamiento
 
   //**********************
   int patrones[P][N][N], s[N][N], n, m;  // Matriz, coordenadas fila-columna
   float a[P], H, p, aleat; // Interacciones neuronales, Umbrales de disparo
-  ofstream fich;
+  float solap[P];
+  ofstream fich, fichsolap;
 
   srand(time(NULL)); // Inicializa el valor de la serie de números aleatorios
 
@@ -39,8 +42,13 @@ int main(){
     InitPatronDeg(s,patrones,degeneracion); 
 
   // Apertura de fichero y 1ª escritura
-  fich.open("hopfield_data.dat");
-  ExportData(fich,s);
+  if(!solapamiento){
+    fich.open("hopfield_data.dat");
+    ExportData(fich,s);
+  }
+  else
+    fichsolap.open("solapamiento.dat");
+  
 
   //***
   //Algoritmo de Metrópolis
@@ -57,11 +65,17 @@ int main(){
       if(aleat<p) 
         s[n][m] = 1-s[n][m];
 
-      if(j%200==0)
+      if(j%200==0 && !solapamiento)
         ExportData(fich,s);
-    }    
-    //ExportData(fich,s);
+    }
+    if(solapamiento){
+      New_solap(solap,s,a,patrones,P);
+      fichsolap << i << ",   " << solap[0] << endl;
+    }
   }
-  fich.close();
+  if(!solapamiento)
+    fich.close();
+  else
+    fichsolap.close();
   return 0;
 }

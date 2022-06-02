@@ -22,7 +22,7 @@ void Generate_a(float a[], int patrones[][N][N], int P);
 float w(int i, int j, int k, int l, float a[], int patrones[][N][N], int P);
 float theta(int i, int j, float a[], int patrones[][N][N], int P);
 float New_H(int s[][N], int n, int m, float a[], float theta[][N], float w[][N][N][N]);
-float New_m(int s[N][N], int patrones[][N][N], int P);
+void New_solap(float m[], int s[N][N], float a[], int patrones[][N][N], int P);
 
 // *************************
 // Leer Patrones Iniciales con díjitos juntos, los separa y los escribe en otro fichero
@@ -124,8 +124,8 @@ void ExportData(ofstream &fich, int s[N][N]){
 
 // ********
 // Función Media de los patrones
-void Generate_anu(float a[], int patrones[][N][N], int P){
-  float a[P], aux=1.0/(N*N);
+void Generate_a(float a[], int patrones[][N][N], int P){
+  float aux=1.0/(N*N);
 
   // Generar a^nu
   for(int nu=0; nu<P; nu++){
@@ -173,7 +173,7 @@ float New_H(int s[N][N], int n, int m, float a[], int patrones[][N][N], int P){
 }
 
 // Función Solapamiento
-void New_m(float m[], int s[N][N], float a[], int patrones[][N][N], int P){
+void New_solap(float m[], int s[N][N], float a[], int patrones[][N][N], int P){
   float aux;
 
   for(int nu=0; nu<N; nu++){
