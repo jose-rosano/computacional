@@ -32,10 +32,10 @@ void CrearPatronesDEF(int P){
   string str[N], name="patron1.txt", aux;
   stringstream ss;
 
-  for(int nu=1; nu<=P; nu++){
+  for(int nu=0; nu<P; nu++){
     // Convierte nu en string y renombra el fichero de entrada
-    ss << nu; ss >> aux; 
-    name.replace(6,1,aux);
+    ss << nu+1; aux = ss.str();
+    name.replace(6,1,aux.erase(0,nu));
 
     file_in.open(name.c_str()); // cstr(): devuelve el string como array de caracteres
     if(!file_in.is_open())
