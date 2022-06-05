@@ -1,68 +1,77 @@
 //***_ VOL1: Modelo de Hopfield_***
 //*********************************
 
-#include <iostream>
-#include <cmath>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <stdlib.h>
-#include <time.h>
 #include "functions.h"
 
-#define N 30 // Tamaño de la red
-using namespace std;
-
 int main(){
-  // Parámetros _______________________Poner booleanos + if para elegir actividad como parámetro??
-  float T=0.0001, degeneracion=0.5; // Temperatura, deformacion (entre 0 y 1)
-  int P=1, PMC=8; // Nº Patrones almacenados, Nº Pasos Montecarlo
+  // Parámetros
+  float T[4]={0.0001,0.01,0.04, 0.1}, deg=0.5; // Temperatura, deformación (entre 0 y 1)
+  int P=1, PMC=50; // Nº Patrones almacenados, Nº Pasos Montecarlo
   bool red_inicial = true; // true:  Condición Inicial Aleatoria
                            // false: Patrón Deformado
-
   //**********************
-  int patrones[P][N][N], s[N][N], n, m;  // Matriz, coordenadas fila-columna
-  float w[N][N][N][N], theta[N][N], H, p, aleat; // Interacciones neuronales, Umbrales de disparo
-  ofstream fich;
+  int T0=sizeof(T)/sizeof(T[0]), patrones[P][N][N], s[T0][N][N], n, m;  // Nº de Temperaturas usadas, Patrones, Espines, coordenadas fila-columna
+  float w[N][N][N][N], theta[N][N], a[P], H, p, aleat, solap[T0][P]; // Interacciones neuronales, Umbrales de disparo
+  ofstream fich[T0], fichsolap;
 
   srand(time(NULL)); // Inicializa el valor de la serie de números aleatorios
 
   // Lectura de patrones en array, generación de variables ctes
   //CrearPatronesDEF(P); // Activar al añadir patrones nuevos (Lee patrones con dígitos juntos y los separa en otro fichero)
   LeerPatronesDEF(patrones,P);
-  Generar_w(w,patrones,P);
+  Generar_a(a,patrones,P);
+  Generar_w(w,a,patrones,P);
   Generar_theta(theta,w);
 
   // Configuración inicial de espines
   if(red_inicial)
-    InitAleat(s); 
+    for(int t=0; t<T0; t++)
+      InitAleat(s[t]); 
   else
-    InitPatronDeg(s,patrones,degeneracion); 
+    for(int t=0; t<T0; t++)
+      InitPatronDeg(s[t],patrones,deg); 
 
   // Apertura de fichero y 1ª escritura
-  fich.open("hopfield_data.dat");
-  ExportData(fich,s);
+  fich[0].open("hopfield1.dat"); //En este se verá la evolución de T=10^-4
+  fich[1].open("hopfield2.dat"); //En este se verán las s(i,j) del últ pMC de todas las T
+  ExportData(fich[0],s[0]);
+  fichsolap.open("solap(pMC).dat");
 
   //***
   //Algoritmo de Metrópolis
   for(int i=1; i<=PMC; i++){
-    for(int j=0; j<N*N; j++){
-      //Elige punto al azar
-      n = rand()%N; //n entre 0 y (N-1)
-      m = rand()%N; //m entre 0 y (N-1)
+    for(int t=0; t<T0; t++){ 
+      for(int j=0; j<N*N; j++){
+        //Elige punto al azar
+        n = rand()%N; //n entre 0 y (N-1)
+        m = rand()%N; //m entre 0 y (N-1)
 
-      //Genera nueva p y nº aleatorio para ver si se invierte el espín
-      H = New_H(s,n,m,theta,w);
-      p = min((float)1,exp(-H/T));
-      aleat = float(rand())/RAND_MAX;
-      if(aleat<p) 
-        s[n][m] = 1-s[n][m];
+        //Genera nueva p y nº aleatorio para ver si se invierte el espín
+        H = New_H(s[t],n,m,theta,w);
+        p = min((float)1,exp(-H/T[t]));
+        aleat = float(rand())/RAND_MAX;
+        if(aleat<p) 
+          s[t][n][m] = 1-s[t][n][m];
 
-      if(j%100==0)
-        ExportData(fich,s);
-    }    
-    //ExportData(fich,s);
+        if(j%200==0 && t==0)
+          ExportData(fich[t],s[t]);
+      }
+      //Calcula solapamiento para cada temperatura
+      New_solap(solap[t],s[t],a,patrones,P);
+    }
+    //Guarda los solapamientos en fichero
+    fichsolap << i << ",   ";
+      if(T0>1)
+        for(int t=0; t<T0-1; t++)
+          fichsolap << solap[t][0] << ",   "; //____0 por el número de patrones
+      fichsolap << solap[T0-1][0] << endl;
   }
-  fich.close();
-  return 0;
+  //Guarda las s(i,j) en fichero
+  for(int t=0; t<T0; t++)
+    ExportData(fich[1],s[t]);
+
+  // Cierro ficheros
+  fich[0].close();
+  fich[1].close();  
+  fichsolap.close();
 }

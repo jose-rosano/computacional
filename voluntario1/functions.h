@@ -9,18 +9,20 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define N 30 // Tamaño de la red
+#define N 25 // Tamaño de la red
 using namespace std;
 
 void CrearPatronesDEF(int P);
 void LeerPatronesDEF(int patrones[][N][N], int P);
-void Generar_w(float w[][N][N][N], int patrones[][N][N], int P);
+void Generar_a(float a[], int patrones[][N][N], int P);
+void Generar_w(float w[][N][N][N], float a[], int patrones[][N][N], int P);
 void Generar_theta(float theta[][N], float w[][N][N][N]);
 void InitAleat(int s[][N]);
 void InitPatronDeg(int s[][N], int patrones[][N][N], float degeneracion);
 void ExportData(ofstream &fich, int s[N][N]);
 
 float New_H(int s[][N], int n, int m, float theta[][N], float w[][N][N][N]);
+void New_solap(float m[], int s[N][N], float a[], int patrones[][N][N], int P);
 
 // *************************
 // Leer Patrones Iniciales con díjitos juntos, los separa y los escribe en otro fichero
@@ -65,10 +67,10 @@ void LeerPatronesDEF(int patrones[][N][N], int P){
   string name="patron1DEF.txt", aux;
   stringstream ss;
 
-  for(int nu=1; nu<=P; nu++){
+  for(int nu=0; nu<P; nu++){
     // Convierte nu en string y renombra el fichero de entrada
-    ss << nu; ss >> aux; 
-    name.replace(6,1,aux);
+    ss << nu+1; aux = ss.str();
+    name.replace(6,1,aux.erase(0,nu));
 
     fich.open(name.c_str()); // cstr(): devuelve el string como array de caracteres
     if(!fich.is_open())
@@ -78,15 +80,15 @@ void LeerPatronesDEF(int patrones[][N][N], int P){
         // Lee los espines
         for(int i=0; i<N; i++)
           for (int j=0; j<N; j++)
-            fich >> patrones[nu-1][i][j];
+            fich >> patrones[nu][i][j];
       }
     fich.close();
   }
 }
 
-// Generar Interacciones Neuronales
-void Generar_w(float w[][N][N][N], int patrones[][N][N], int P){
-  float a[P], aux=1.0/(N*N);
+// Función Media de los patrones
+void Generar_a(float a[], int patrones[][N][N], int P){
+  float aux=1.0/(N*N);
 
   // Generar a^nu
   for(int nu=0; nu<P; nu++){
@@ -96,6 +98,11 @@ void Generar_w(float w[][N][N][N], int patrones[][N][N], int P){
         a[nu] += patrones[nu][i][j];
     a[nu] *= aux;
   }
+}
+
+// Generar Interacciones Neuronales
+void Generar_w(float w[][N][N][N], float a[], int patrones[][N][N], int P){
+  float aux=1.0/(N*N);
 
   //Generar w_ij,kl (interacciones neuronales)
   for(int i=0; i<N; i++)
@@ -166,8 +173,23 @@ float New_H(int s[N][N], int n, int m, float theta[][N], float w[][N][N][N]){
   float aux=0;
 
   for(int i=0; i<N; i++)
-    for(int j=0; j<N-1; j++)
-      aux += w[n][m][i][j];
+    for(int j=0; j<N; j++)
+      aux += w[n][m][i][j]*s[i][j];
 
-  return (1-2*s[n][m])*(theta[n][m]-aux);
+  return (float)(1-2*s[n][m])*(theta[n][m]-aux);
+}
+
+// Función Solapamiento
+void New_solap(float m[], int s[N][N], float a[], int patrones[][N][N], int P){
+  float aux;
+
+  for(int nu=0; nu<P; nu++){
+    aux = 1.0/(N*N*a[nu]*(1-a[nu]));
+
+    m[nu] = 0;
+    for(int i=0; i<N; i++)
+      for(int j=0; j<N; j++)
+        m[nu] += (patrones[nu][i][j]-a[nu])*(s[i][j]-a[nu]);
+    m[nu] *= aux;
+  }
 }
