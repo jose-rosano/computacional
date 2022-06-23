@@ -5,7 +5,7 @@
 
 int main(){
   // Parámetros _______________________Poner booleanos + if para elegir actividad como parámetro??
-  float T[40], deg=0.5; // Temperaturas, deformación (entre 0 y 1)
+  float T[40], deg=0.2; // Temperaturas, deformación (entre 0 y 1)
   int P=1, PMC=50; // Nº Patrones almacenados, Nº Pasos Montecarlo
   bool red_inicial = false; // true:  Condición Inicial Aleatoria
                            // false: Patrón Deformado
