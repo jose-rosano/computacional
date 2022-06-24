@@ -7,7 +7,7 @@ int main(){
   // Parámetros 
   float T[40], deg=0.2; // Temperaturas, deformación (entre 0 y 1)
   int P=5, PMC=50; // Nº Patrones almacenados, Nº Pasos Montecarlo
-  bool red_inicial = true; // true:  Condición Inicial Aleatoria
+  bool red_inicial = false; // true:  Condición Inicial Aleatoria
                            // false: Patrón Deformado
   //**********************
   int T0=sizeof(T)/sizeof(T[0]), patrones[P][N][N], s[N][N], n, m;  // Nº de Temperaturas usadas, Patrones, Espines, coordenadas fila-columna
