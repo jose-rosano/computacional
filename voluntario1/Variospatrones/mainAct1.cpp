@@ -17,7 +17,7 @@ int main(){
   srand(time(NULL)); // Inicializa el valor de la serie de números aleatorios
 
   // Lectura de patrones en array, generación de variables ctes
-  //CrearPatronesDEF(P); // Activar al añadir patrones nuevos (Lee patrones con dígitos juntos y los separa en otro fichero)
+  CrearPatronesDEF(P); // Activar al añadir patrones nuevos (Lee patrones con dígitos juntos y los separa en otro fichero)
   LeerPatronesDEF(patrones,P);
   Generar_a(a,patrones,P);
   Generar_w(w,a,patrones,P);
