@@ -152,9 +152,9 @@ void InitPatronDeg(int s[][N], int patrones[][N][N], float degeneracion){
   for(int i=0; i<N; i++)
     for(int j=0; j<N; j++){
       if(rand()< degeneracion*RAND_MAX)
-        s[i][j] = 1-patrones[0][i][j]; // Cambia el espín
+        s[i][j] = 1-patrones[3][i][j]; // Cambia el espín
       else 
-        s[i][j] = patrones[0][i][j]; // Mantiene el espín
+        s[i][j] = patrones[3][i][j]; // Mantiene el espín
     }
 }
 
