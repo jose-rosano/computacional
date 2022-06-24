@@ -4,7 +4,7 @@
 #include "functions.h"
 
 int main(){
-  // Parámetros _______________________Poner booleanos + if para elegir actividad como parámetro??
+  // Parámetros
   float T[40], deg=0.2; // Temperaturas, deformación (entre 0 y 1)
   int P=1, PMC=50; // Nº Patrones almacenados, Nº Pasos Montecarlo
   bool red_inicial = false; // true:  Condición Inicial Aleatoria
@@ -23,12 +23,6 @@ int main(){
   Generar_w(w,a,patrones,P);
   Generar_theta(theta,w);
 
-  //Configuración inicial de espines
-  if(red_inicial)
-    InitAleat(s); 
-  else
-    InitPatronDeg(s,patrones,deg);
-
   //Creo vector temperaturas, 10 valores por cada orden de magnitud
   for(int i=4; i>0; i--){
     aux = pow(10,-i);
@@ -42,7 +36,13 @@ int main(){
 
   //***
   //Algoritmo de Metrópolis
-  for(int t=0; t<T0; t++){ 
+  for(int t=0; t<T0; t++){
+    //Configuración inicial de espines
+    if(red_inicial)
+      InitAleat(s); 
+    else
+      InitPatronDeg(s,patrones,deg);
+      
     for(int i=1; i<=PMC; i++)
       for(int j=0; j<N*N; j++){
         //Elige punto al azar

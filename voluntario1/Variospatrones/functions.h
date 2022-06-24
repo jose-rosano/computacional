@@ -18,7 +18,6 @@ void Generar_a(float a[], int patrones[][N][N], int P);
 void Generar_w(float w[][N][N][N], float a[], int patrones[][N][N], int P);
 void Generar_theta(float theta[][N], float w[][N][N][N]);
 void InitAleat(int s[][N]);
-void InitAleat(int s[][N], int P);
 void InitPatronDeg(int s[][N], int patrones[][N][N], float degeneracion);
 void ExportData(ofstream &fich, int s[N][N]);
 
@@ -136,19 +135,6 @@ void Generar_theta(float theta[][N], float w[][N][N][N]){
 // Inicializar Matriz a Configuración Desordenada
 void InitAleat(int s[][N]){
   srand(time(NULL));
-
-  for(int i=0; i<N; i++)
-    for(int j=0; j<N; j++){
-      if(rand()< 0.5*RAND_MAX)
-        s[i][j] = 1;
-      else 
-        s[i][j] = 0;
-    }
-}
-
-// Inicializar Matriz a Configuración Desordenada (modificado)
-void InitAleat(int s[][N], int P){
-  srand(time(NULL)+P);
 
   for(int i=0; i<N; i++)
     for(int j=0; j<N; j++){
