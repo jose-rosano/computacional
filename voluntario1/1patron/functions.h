@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define N 20 // Tamaño de la red
+#define N 30 // Tamaño de la red
 using namespace std;
 
 void CrearPatronesDEF(int P);
