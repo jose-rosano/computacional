@@ -1,0 +1,35 @@
+Impulsos de Hohmann
+ * Dv1 = 3.428e3 (m/s)
+
+Condiciones Iniciales:
+ * r: RT (km)
+ * v: vT + Dv1 = 33228 (m/s)
+ * phi:  0 (º) (respecto al Sol)
+ * theta: 90 (º)
+
+ w = v/R
+ G = 6.6738e-11 // Cte Gravitación Universal
+ h = 6.37816e6 // Radio Tierra (del planeta, no de la órbita)
+
+4 Cuerpos (masa; dist al Sol; vel orbital; vel ang; parám grav):
+ 1. Sol     ->  1.989*10^30 (kg) = 1.989e30
+                0
+                0
+                0
+                1.327*10^20 (m^3/s^2) = 1.327e20
+ 2. Tierra  ->  5.97*10^24 (kg) = 5.97e24
+                149.6*10^6 (km) = 1.496e11
+                29.8 (km/s) = 2.98e4
+                1.992^10^-7 (rad/s) = 1.992e-7   
+                3.986*10^14 (m^3/s^2) = 3.986e14
+ 3. Marte   ->  0.642*10^24 (kg) = 6.42e23
+                228.0*10^6 (km) = 2.280e11
+                24.1 (km/s) = 2.41e4
+                1.057*10^-7 = 1.057e-7
+                4.283*10^13 (m^3/s^2) = 4.283e13
+ 4. Cohete  ->  
+
+
+************_Bibliografía_***********
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/
+https://en.wikipedia.org/wiki/Standard_gravitational_parameter
