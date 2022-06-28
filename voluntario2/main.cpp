@@ -5,8 +5,8 @@
 
 int main(){
   // Parámetros iniciales
-  int t0=9e7, h=6; // Nº máximo de iteraciones; h = 1min
-  float r=RT+136, phi=2.44279-3, theta=91.2, v=32715; // Cond Inic: Radio (m), Áng (º), Vel con impulso (m/s)
+  int t0=7e7, h=6; // Nº máximo de iteraciones; h = 1min
+  float r=RT+135.96, phi=2.44279-3, theta=91.2, v=32715; // Cond Inic: Radio (m), Áng (º), Vel con impulso (m/s)
                     //2.44279-3    93    32715;
   //***********
   float y[4], k[4][4]; // Coordenadas, K_i de RK
@@ -20,9 +20,6 @@ int main(){
   fich.open("spacecraft_mars.dat");
   ExportData(fich,y,0);
 
-  // 
-  //rM0 = sqrt(xi*xi + y[0]*y[0] - 2*xi*y[0]*cos(y[1]-phi0));
-  //rMmin = rM0;
   
   // Algoritmo
   for(float t=0; t<=t0; t +=h){
@@ -52,30 +49,13 @@ int main(){
         y[n] = y[n] + (k[0][n] +2*k[1][n] +2*k[2][n] +k[3][n])/6;
     // ***
         
-/*
-    if( (t >= 2.31e+007) && (t<=2.4e+007) ){
-      rM = sqrt(xi*xi + y[0]*y[0] - 2*xi*y[0]*cos(y[1]-wM*t-phi0));
-      fich2 << t << ",  " << rM << ",  " << acos( (y[0]*y[0] + rM*rM - xi*xi) / (2*rM*y[0]) ) << endl;
-    }
-*/
-    // Método 5
+/*  // Método 5
     if( (t>=2.331215e+007) && m==0){
       gamma = 91 *3.1415926535/180; //En (rad)
       v2 = xi*wM;
 
       y[2] = v2*cos(gamma);
       y[3] = y[0]*v2*sin(gamma);
-      cout << "1st stage message" << endl;
-      m++;
-    }
-
-
-/*
-    // Método 4
-    // float r=RT+135.96, phi=2.44279-3, theta=91.8, v=32710;
-    // Cambio de velocidad para entrar en órbita alrededor de Marte
-    if( (t >= 2.2e+007) && m==0){
-      New_v(y,t);
       cout << "1st stage message" << endl;
       m++;
     }
@@ -90,28 +70,8 @@ int main(){
     }
     rM0=rM;
 */
-/*
-  // Método 1
-    // float r=RT+135.96, phi=2.44279-3, theta=91.8, v=32710;
-    // Cambio de velocidad para entrar en órbita alrededor de Marte
-    if( (t >= 2.16e+007) && m==0){
-      New_v(y,t);
-      cout << "1st stage message" << endl;
-      m++;
-    }
-*/
-/*
-  // Método 3 ('máximo' acercamiento cohete-Marte)
-    // Cambio de velocidad para entrar en órbita alrededor de Marte
-    if( (t >= 2.33e+007) && m==0){
-      New_v(y,t);
-      cout << "1st stage message" << endl;
-      m++;
-    }
-*/
-
     // Escritura en fichero
-    if( (int)t % (h*(int)2.5e5) == 0 ) // (int)t % (h*(int)1e5) == 0
+    if( (int)t % (h*(int)9e4) == 0 )
       ExportData(fich,y,t);
   }
 
