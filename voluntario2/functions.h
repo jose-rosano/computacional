@@ -88,14 +88,8 @@ void New_v(float y[], float t){
   alpha = acos( (y[0]*y[0] + rM*rM - xi*xi) / (2*rM*y[0]) );
   theta2 = alpha + y[1] + 0.5*3.1415926536;
   v2hat = sqrt(Delta*muM/rM);
-  cout << v2hat << ",   " << vorb << endl;
-  cout << theta2 << ",   " << alpha << ",   " << y[1] << endl;
 
   // Se suma la velocidad orbital del cohete respecto a Marte y la de Marte respecto al Sol
   y[2] = v2hat*cos(theta2-y[1]) + (-cos(y[1]) * vorb*sin(wM*t+phi0) + sin(y[1]) * vorb*cos(wM*t+phi0));
   y[3] = y[0]*v2hat*sin(theta2-y[1]) + (y[0]*sin(y[1]) * vorb*sin(wM*t+phi0) + y[0]*cos(y[1]) * vorb*cos(wM*t+phi0));
-/*
-  y[2] = (-cos(y[1]) * wM*xi*sin(wM*t+phi0) + sin(y[1]) * wM*xi*cos(wM*t+phi0));
-  y[3] = (y[0]*sin(y[1]) * wM*xi*sin(wM*t+phi0) + y[0]*cos(y[1]) * wM*xi*cos(wM*t+phi0));
-*/
 }

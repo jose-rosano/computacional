@@ -8,6 +8,8 @@ int main(){
   int t0=7e7, h=6; // Nº máximo de iteraciones; h = 1min
   float r=RT+135.96, phi=2.44279-3, theta=91.2, v=32715; // Cond Inic: Radio (m), Áng (º), Vel con impulso (m/s)
                     //2.44279-3    93    32715;
+  bool impulso2= true; // Proporciona o no el 2º impulso
+
   //***********
   float y[4], k[4][4]; // Coordenadas, K_i de RK
   float aux[4], m=0, rM, gamma, v2;
@@ -49,27 +51,12 @@ int main(){
         y[n] = y[n] + (k[0][n] +2*k[1][n] +2*k[2][n] +k[3][n])/6;
     // ***
         
-/*  // Método 5
-    if( (t>=2.331215e+007) && m==0){
-      gamma = 91 *3.1415926535/180; //En (rad)
-      v2 = xi*wM;
-
-      y[2] = v2*cos(gamma);
-      y[3] = y[0]*v2*sin(gamma);
-      cout << "1st stage message" << endl;
-      m++;
-    }
-*/
-/*  //Método 2
-    // Cambio de velocidad
-    rM = sqrt(xi*xi + y[0]*y[0] - 2*xi*y[0]*cos(y[1]-wM*t-phi0));
-    if((rM>rM0) && m==0){
+    // Cambio de velocidad para entrar en órbita alrededor de Marte
+    if( impulso2 && (t >= 2.16e+007) && m==0){
       New_v(y,t);
-      cout << "1st stage message: " << rM << endl;
       m++;
     }
-    rM0=rM;
-*/
+
     // Escritura en fichero
     if( (int)t % (h*(int)9e4) == 0 )
       ExportData(fich,y,t);
